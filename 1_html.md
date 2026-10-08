@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIQUE 蜜刻 | 專屬自己的「秘蜜」時刻 - Official Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mique: {
+                            purple: '#735E8A',       // Primary Brand Color C30 M40 Y0 K25
+                            'purple-dark': '#3E2756',  // Deep Violet Accent
+                            'purple-light': '#9582A8', // Soft Accent Purple
+                            lavender: '#F4EFF8',      // Silky Lavender BG
+                            gold: '#D4AF37',          // Crown Rose Gold
+                            'gold-light': '#E5C380',
+                            'gold-dark': '#A68222',
+                            rose: '#FAFAF8'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Noto Serif TC', 'serif'],
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FAFAFD;
+            color: #2B2333;
+        }
+        .font-serif-custom {
+            font-family: 'Noto Serif TC', 'Playfair Display', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4EFF8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #735E8A;
+            border-radius: 4px;
+        }
+        .page-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+        }
+        .page-view.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #E5C380 50%, #A68222 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .edm-dashed-box {
+            border: 2px dashed #D4AF37;
+            background: radial-gradient(circle, #ffffff 0%, #F4EFF8 100%);
+        }
+        #wheel-canvas {
+            transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mique-purple-light selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-mique-purple text-white text-xs py-2 text-center tracking-widest font-light px-4 relative z-50 shadow-sm">
+        <span>✨ 慶祝 MIQUE 蜜刻品牌新登場 ｜ 秘蜜全系列組合價 $1,999 享尊榮禮遇 ｜ 官方客服: mique20261207@gmail.com</span>
+    </div>
+
+    <!-- MAIN NAVBAR WITH NESTED PRODUCTS & BRAND MENUS -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-mique-lavender transition-all duration-300 shadow-sm" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Official Logo (Crown M Twin Circles) -->
+                <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-full bg-mique-purple flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform duration-300">
+                        <svg viewBox="0 0 100 100" class="w-full h-full fill-none">
+                            <circle cx="50" cy="50" r="46" stroke="#D4AF37" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="41" stroke="#D4AF37" stroke-width="1" stroke-dasharray="2 2"/>
+                            <path d="M30 65 L30 40 L42 55 L50 42 L58 55 L70 40 L70 65 Z" fill="#D4AF37"/>
+                            <polygon points="30,35 34,30 38,35" fill="#E5C380"/>
+                            <polygon points="50,37 54,30 58,37" fill="#E5C380"/>
+                            <polygon points="62,35 66,30 70,35" fill="#E5C380"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold font-serif-custom tracking-widest text-mique-purple block leading-none">MIQUE</span>
+                        <span class="text-[10px] tracking-[0.25em] text-mique-gold-dark font-medium block mt-1">蜜 刻</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                    <a href="#home" onclick="navigateTo('home')" class="nav-link px-3 py-2 rounded-lg text-gray-700 hover:text-mique-purple hover:bg-mique-lavender/60 transition">首頁</a>
+                    
+                    <!-- Brand Dropdown Navigation -->
+                    <div class="relative group py-2">
+                        <button class="nav-link px-3 py-2 rounded-lg text-gray-700 hover:text-mique-purple hover:bg-mique-lavender/60 transition inline-flex items-center gap-1">
+                            <span>品牌故事</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180 text-mique-gold-dark"></i>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-48 rounded-xl bg-white shadow-xl border border-mique-lavender py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="#brand-intro" onclick="navigateTo('brand-intro')" class="block px-4 py-2.5 text-xs text-gray-700 hover:bg-mique-lavender hover:text-mique-purple transition"><i class="fa-solid fa-heart-pulse mr-2 text-mique-gold"></i>品牌介紹 (Intro)</a>
+                            <a href="#brand-core" onclick="navigateTo('brand-core')" class="block px-4 py-2.5 text-xs text-gray-700 hover:bg-mique-lavender hover:text-mique-purple transition"><i class="fa-solid fa-gem mr-2 text-mique-gold"></i>品牌核心 (Core)</a>
+                            <a href="#brand-history" onclick="navigateTo('brand-history')" class="block px-4 py-2.5 text-xs text-gray-700 hover:bg-mique-lavender hover:text-mique-purple transition"><i class="fa-solid fa-clock-rotate-left mr-2 text-mique-gold"></i>品牌歷史 (History)</a>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS NESTED DROPDOWN (全系列產品延伸至 秘蜜系列 及 5 個產品) -->
+                    <div class="relative group py-2">
+                        <button class="nav-link px-3 py-2 rounded-lg text-gray-700 hover:text-mique-purple hover:bg-mique-lavender/60 transition inline-flex items-center gap-1">
+                            <span>全系列產品</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180 text-mique-gold-dark"></i>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-64 rounded-xl bg-white shadow-xl border border-mique-lavender py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="#products-overview" onclick="navigateTo('products-overview')" class="block px-4 py-2.5 text-xs font-bold text-mique-purple hover:bg-mique-lavender transition border-b border-gray-100">
+                                <i class="fa-solid fa-border-all mr-2 text-mique-gold"></i>全系列產品總覽
+                            </a>
+                            
+                            <!-- 秘蜜保養系列 Header -->
+                            <div class="px-4 pt-2.5 pb-1 text-[10px] font-bold text-mique-gold-dark uppercase tracking-wider">
+                                <i class="fa-solid fa-sparkles mr-1"></i> 秘蜜保養系列 (Secret Series)
+                            </div>
+                            <a href="#products-secret" onclick="navigateTo('products-secret')" class="block px-4 py-2 text-xs font-bold text-gray-800 hover:bg-mique-lavender hover:text-mique-purple transition pl-6">
+                                ➔ 秘蜜系列 5 大單品展示
+                            </a>
+                            <a href="#product-1" onclick="navigateTo('product-1')" class="block px-4 py-1.5 text-xs text-gray-600 hover:bg-mique-lavender hover:text-mique-purple transition pl-8">
+                                1. 蜜境保濕前導水
+                            </a>
+                            <a href="#product-2" onclick="navigateTo('product-2')" class="block px-4 py-1.5 text-xs text-gray-600 hover:bg-mique-lavender hover:text-mique-purple transition pl-8">
+                                2. 蜜萃光感亮膚精華
+                            </a>
+                            <a href="#product-3" onclick="navigateTo('product-3')" class="block px-4 py-1.5 text-xs text-gray-600 hover:bg-mique-lavender hover:text-mique-purple transition pl-8">
+                                3. 蜜封修護鎖水乳霜
+                            </a>
+                            <a href="#product-4" onclick="navigateTo('product-4')" class="block px-4 py-1.5 text-xs text-gray-600 hover:bg-mique-lavender hover:text-mique-purple transition pl-8">
+                                4. 蜜方淨瑕調理凝膠
+                            </a>
+                            <a href="#product-5" onclick="navigateTo('product-5')" class="block px-4 py-1.5 text-xs text-gray-600 hover:bg-mique-lavender hover:text-mique-purple transition pl-8">
+                                5. 蜜護私密淨膚慕絲
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <a href="#cycle-guide" onclick="navigateTo('cycle-guide')" class="nav-link px-3 py-2 rounded-lg text-gray-700 hover:text-mique-purple hover:bg-mique-lavender/60 transition">週期保養寶典</a>
+                    
+                    <!-- LUCKY WHEEL MINI GAME NAV ITEM -->
+                    <a href="#game" onclick="navigateTo('game')" class="nav-link px-3 py-2 rounded-lg text-mique-purple font-bold bg-mique-lavender hover:bg-mique-purple hover:text-white transition flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-mique-gold"></i>
+                        <span>保養秘蜜幸運盤</span>
+                        <span id="game-status-badge" class="px-1.5 py-0.2 text-[9px] rounded-full bg-mique-gold text-mique-purple font-bold">限轉1次</span>
+                    </a>
+
+                    <a href="#sdgs" onclick="navigateTo('sdgs')" class="nav-link px-3 py-2 rounded-lg text-gray-700 hover:text-mique-purple hover:bg-mique-lavender/60 transition">永續理念 SDGs</a>
+                </nav>
+
+                <!-- Cart Button -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleCartDrawer()" class="relative p-2.5 rounded-full bg-mique-lavender text-mique-purple hover:bg-mique-purple hover:text-white transition duration-300">
+                        <i class="fa-solid fa-bag-shopping text-base"></i>
+                        <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-mique-gold text-mique-purple text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">0</span>
+                    </button>
+
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-600 hover:text-mique-purple focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-mique-lavender px-4 pt-2 pb-6 space-y-2">
+            <a href="#home" onclick="navigateTo('home'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">首頁</a>
+            <a href="#brand-intro" onclick="navigateTo('brand-intro'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">品牌介紹</a>
+            <a href="#brand-core" onclick="navigateTo('brand-core'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">品牌核心</a>
+            <a href="#brand-history" onclick="navigateTo('brand-history'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">品牌歷史歷程</a>
+            <a href="#products-overview" onclick="navigateTo('products-overview'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">全系列產品總覽</a>
+            <a href="#products-secret" onclick="navigateTo('products-secret'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-bold text-mique-purple pl-6">↳ 秘蜜保養系列 5 大單品</a>
+            <a href="#cycle-guide" onclick="navigateTo('cycle-guide'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">週期保養寶典</a>
+            <a href="#game" onclick="navigateTo('game'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-bold text-mique-purple bg-mique-lavender">✨ 保養秘蜜幸運盤 (限轉1次)</a>
+            <a href="#sdgs" onclick="navigateTo('sdgs'); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800">永續理念 SDGs</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- ================= 1. PAGE: HOME ================= -->
+        <section id="page-home" class="page-view active">
+            <div class="relative bg-gradient-to-r from-mique-purple via-mique-purple-dark to-mique-purple text-white overflow-hidden py-20 lg:py-28">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-mique-gold/40 text-mique-gold-light text-xs tracking-widest uppercase">
+                            <i class="fa-solid fa-crown text-[10px]"></i> Luxury Skincare & Period Wellness
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-serif-custom tracking-wide leading-tight">
+                            專屬自己的<br><span class="text-gold-gradient">「秘蜜」時刻</span>
+                        </h1>
+                        <p class="text-gray-200 text-base sm:text-lg font-light leading-relaxed max-w-xl">
+                            MIQUE 蜜刻，源自對女性全方位親密肌膚與荷爾蒙週期的溫柔呵護。融合頂級蜂蜜萃取與黃金修護配方，陪伴妳在每個重要週期，重拾自信與純粹綻放。
+                        </p>
+                        <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                            <a href="#products-secret" onclick="navigateTo('products-secret')" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-mique-gold to-mique-gold-light text-mique-purple-dark font-bold hover:shadow-lg hover:scale-105 transition duration-300 text-center">
+                                探索秘蜜系列 5 大單品 <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                            <a href="#game" onclick="navigateTo('game')" class="px-8 py-3.5 rounded-full bg-white/10 border border-mique-gold/50 text-mique-gold font-bold hover:bg-mique-gold hover:text-mique-purple-dark transition duration-300 text-center flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> 幸運輪盤 (限抽1次)
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex justify-center items-center">
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl shadow-2xl relative max-w-sm w-full">
+                            <div class="relative rounded-2xl overflow-hidden bg-gradient-to-b from-mique-lavender to-white p-6 text-center">
+                                <span class="bg-mique-purple text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full mb-3 inline-block">Star Product</span>
+                                <div class="w-40 h-48 mx-auto my-3 flex items-center justify-center">
+                                    <svg viewBox="0 0 100 140" class="w-24 h-32 mx-auto filter drop-shadow">
+                                        <rect x="30" y="30" width="40" height="90" rx="8" fill="#F4EFF8"/>
+                                        <rect x="38" y="10" width="24" height="20" rx="2" fill="#D4AF37"/>
+                                        <text x="50" y="70" font-size="7" font-weight="bold" fill="#735E8A" text-anchor="middle">MIQUE</text>
+                                    </svg>
+                                </div>
+                                <h3 class="font-serif-custom font-bold text-lg text-mique-purple">蜜萃光感亮膚精華</h3>
+                                <p class="text-xs text-gray-500 mt-1">極致鎖水亮白 ｜ 蜂萃與維生素B5</p>
+                                <div class="mt-4 flex justify-between items-center px-2">
+                                    <span class="text-mique-gold-dark font-bold text-lg">$899</span>
+                                    <button onclick="navigateTo('product-2')" class="px-4 py-1.5 rounded-full bg-mique-purple text-white text-xs hover:bg-mique-purple-dark transition">查看產品頁</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-mique-gold-dark text-xs font-bold tracking-widest uppercase">Secret Skincare Series</span>
+                    <h2 class="text-3xl font-bold font-serif-custom text-mique-purple mt-2">MIQUE 蜜刻「秘蜜保養系列」</h2>
+                    <p class="text-gray-500 text-sm mt-2">包含面部角質保濕、集中美白、修護鎖水、淨瑕調理與私密清潔</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="home-products-preview"></div>
+            </div>
+        </section>
+
+        <!-- ================= 2. BRAND PAGES (INTRO / CORE / HISTORY) ================= -->
+        <section id="page-brand-intro" class="page-view">
+            <div class="bg-mique-lavender py-12 border-b border-mique-lavender text-center">
+                <span class="text-mique-gold-dark text-xs font-bold tracking-widest uppercase">About MIQUE</span>
+                <h1 class="text-3xl font-bold font-serif-custom text-mique-purple mt-1">MIQUE 品牌介紹</h1>
+                <p class="text-gray-600 text-sm mt-2">專屬自己的「秘蜜」時刻</p>
+            </div>
+            <div class="max-w-5xl mx-auto px-4 py-16 space-y-12">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-mique-lavender space-y-4">
+                    <h3 class="text-2xl font-bold font-serif-custom text-mique-purple">品牌創立初衷</h3>
+                    <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+                        現代女性在忙碌的生活步調中，往往照顧了全世界，卻忘了留時間給自己。MIQUE（蜜刻）以此為靈感誕生，致力於打造溫和、極致質感的保養品。讓保養不再是例行公事，而是一段專屬妳的儀式。
+                    </p>
+                    <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+                        品牌名稱 <strong>M.I.Q.U.E</strong> 象徵著五大承諾：<strong>Mastery（專業）</strong>、<strong>Integrity（真誠）</strong>、<strong>Quality（品質）</strong>、<strong>Unique（獨特）</strong> 與 <strong>Elegance（優雅）</strong>。我們特別關注女性生理週期的肌膚變化，提供精準、有感、不給肌膚多餘負擔的純淨養護。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-brand-core" class="page-view">
+            <div class="bg-mique-lavender py-12 border-b border-mique-lavender text-center">
+                <span class="text-mique-gold-dark text-xs font-bold tracking-widest uppercase">Brand Pillars</span>
+                <h1 class="text-3xl font-bold font-serif-custom text-mique-purple mt-1">MIQUE 5大品牌核心</h1>
+            </div>
+            <div class="max-w-5xl mx-auto px-4 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-mique-lavender flex items-center justify-center text-mique-purple font-bold mb-3">01</div>
+                    <h3 class="font-bold text-mique-purple mb-2">溫和呵護 (Mastery)</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">嚴選有機蜂蜜萃取與天然植物成分，經敏感肌貼布測試，全系列 0% 酒精與人工刺激成分添加。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-mique-lavender flex items-center justify-center text-mique-purple font-bold mb-3">02</div>
+                    <h3 class="font-bold text-mique-purple mb-2">質感美學 (Elegance)</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">優雅主色調 C30 M40 Y0 K25（#735E8A）搭配皇冠金徽飾，提升日常保養桌上的尊榮生活品味。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-mique-lavender flex items-center justify-center text-mique-purple font-bold mb-3">03</div>
+                    <h3 class="font-bold text-mique-purple mb-2">真誠品質 (Integrity)</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">符合 ISO 22716 國際化妝品 GMP 認證與衛福部 PIF 產品資訊檔案完整登錄規章。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-mique-lavender flex items-center justify-center text-mique-purple font-bold mb-3">04</div>
+                    <h3 class="font-bold text-mique-purple mb-2">獨特保養 (Unique)</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">首創結合「荷爾蒙生理週期」與「面部/私密全方位」對應保養策略，分階段修護肌膚需求。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-mique-lavender flex items-center justify-center text-mique-purple font-bold mb-3">05</div>
+                    <h3 class="font-bold text-mique-purple mb-2">永續責任 (Quality)</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">響應聯合國 SDGs 永續目標，採用可回收環保包材與零殘忍無動物實驗原料。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-brand-history" class="page-view">
+            <div class="bg-mique-lavender py-12 border-b border-mique-lavender text-center">
+                <span class="text-mique-gold-dark text-xs font-bold tracking-widest uppercase">Brand Evolution</span>
+                <h1 class="text-3xl font-bold font-serif-custom text-mique-purple mt-1">品牌歷史演進 (History Timeline)</h1>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-4 py-16">
+                <div class="relative border-l-2 border-mique-purple/30 ml-4 md:ml-32 space-y-12">
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-mique-purple border-4 border-white text-white flex items-center justify-center text-xs shadow-md">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <div class="md:absolute md:-left-36 md:top-2 text-xs font-bold text-mique-gold-dark font-mono uppercase">2024.09</div>
+                        <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                            <span class="text-xs font-bold text-mique-purple bg-mique-lavender px-3 py-1 rounded-full">階段一 ｜ 品牌發想</span>
+                            <h3 class="text-lg font-bold text-mique-purple mt-2">MIQUE 品牌概念萌芽</h3>
+                            <p class="text-xs text-gray-600 mt-2 leading-relaxed">奠定以蜂蜜萃取 (Honey Extract) 為基底、主打親密與週期護膚的「MIQUE 蜜刻」提案。</p>
+                        </div>
+                    </div>
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-mique-purple border-4 border-white text-white flex items-center justify-center text-xs shadow-md">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div class="md:absolute md:-left-36 md:top-2 text-xs font-bold text-mique-gold-dark font-mono uppercase">2025.03</div>
+                        <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                            <span class="text-xs font-bold text-mique-purple bg-mique-lavender px-3 py-1 rounded-full">階段二 ｜ 視覺與Logo演進</span>
+                            <h3 class="text-lg font-bold text-mique-purple mt-2">皇冠 M 標誌與專屬 C30 M40 Y0 K25 色彩確立</h3>
+                            <p class="text-xs text-gray-600 mt-2 leading-relaxed">最終定案「皇冠 M 雙圓徽飾」標誌，搭配特別調配的優雅紫羅蘭色 (#735E8A) 與玫瑰金。</p>
+                        </div>
+                    </div>
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-mique-purple border-4 border-white text-white flex items-center justify-center text-xs shadow-md">
+                            <i class="fa-solid fa-vial"></i>
+                        </div>
+                        <div class="md:absolute md:-left-36 md:top-2 text-xs font-bold text-mique-gold-dark font-mono uppercase">2025.09</div>
+                        <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                            <span class="text-xs font-bold text-mique-purple bg-mique-lavender px-3 py-1 rounded-full">階段三 ｜ 研發與檢驗規章</span>
+                            <h3 class="text-lg font-bold text-mique-purple mt-2">完成 5 大單品配方測試與 PIF 建檔</h3>
+                            <p class="text-xs text-gray-600 mt-2 leading-relaxed">推出前導水、亮膚精華、鎖水乳霜、淨瑕凝膠與私密慕絲 5 款明星單品。符合 ISO 22716 規範。</p>
+                        </div>
+                    </div>
+                    <div class="relative pl-8 group">
+                        <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-mique-purple border-4 border-white text-white flex items-center justify-center text-xs shadow-md">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <div class="md:absolute md:-left-36 md:top-2 text-xs font-bold text-mique-gold-dark font-mono uppercase">2026.03</div>
+                        <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                            <span class="text-xs font-bold text-mique-purple bg-mique-lavender px-3 py-1 rounded-full">階段四 ｜ 品牌官方上線</span>
+                            <h3 class="text-lg font-bold text-mique-purple mt-2">MIQUE 官方旗艦網站發表</h3>
+                            <p class="text-xs text-gray-600 mt-2 leading-relaxed">結合「多圖 EDM 藝廊」、「週期保養對照寶典」與「幸運轉盤互動體驗」。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. NEW NESTED PRODUCTS PAGES ================= -->
+        
+        <!-- 3A: 全系列產品總覽 (Products Overview) -->
+        <section id="page-products-overview" class="page-view">
+            <div class="bg-mique-lavender py-12 border-b border-mique-lavender text-center">
+                <span class="text-mique-gold-dark font-bold text-xs tracking-widest uppercase">All Products Collection</span>
+                <h1 class="text-3xl sm:text-4xl font-bold font-serif-custom text-mique-purple mt-2">全系列產品總覽</h1>
+                <p class="text-gray-600 text-sm mt-2">探索 MIQUE 全方位寵愛肌膚系列，點擊子系列獲得完整產品資訊</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-4 py-16 space-y-12">
+                <!-- Banner for Secret Series -->
+                <div class="bg-white rounded-3xl p-8 border border-mique-lavender shadow-md flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="space-y-3 max-w-xl">
+                        <span class="bg-mique-purple text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full">Signature Series</span>
+                        <h2 class="text-2xl font-bold font-serif-custom text-mique-purple">秘蜜保養系列 (Secret Series)</h2>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            針對女性生理週期荷爾蒙變化打造的 5 大極緻單品，包含面部基礎前導補水、透亮精華、鎖水乳霜、淨瑕凝膠與私密弱酸清潔。
+                        </p>
+                        <div class="pt-2">
+                            <a href="#products-secret" onclick="navigateTo('products-secret')" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-mique-purple text-white text-xs font-bold hover:bg-mique-gold hover:text-mique-purple transition">
+                                進入「秘蜜系列」延伸 5 大產品 <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-64 bg-mique-lavender/50 p-6 rounded-2xl text-center border border-mique-lavender">
+                        <span class="text-4xl font-bold text-mique-purple font-serif-custom">5</span>
+                        <p class="text-xs text-gray-600 mt-1 font-bold">秘蜜系列款護膚單品</p>
+                        <span class="text-[10px] text-mique-gold-dark mt-2 block font-mono">組合優惠價 $1,999</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-mique-purple mb-6 font-serif-custom"><i class="fa-solid fa-sparkles text-mique-gold mr-2"></i>全系列單品快速入口</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="products-overview-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3B: 秘蜜保養系列 主頁 (Secret Series Page View) -->
+        <section id="page-products-secret" class="page-view">
+            <div class="bg-gradient-to-r from-mique-purple via-mique-purple-dark to-mique-purple text-white py-12 text-center">
+                <span class="text-mique-gold-light text-xs font-bold tracking-widest uppercase">Secret Skincare Collection</span>
+                <h1 class="text-3xl font-bold font-serif-custom mt-1">秘蜜保養系列 (Secret Series)</h1>
+                <p class="text-gray-200 text-sm mt-2">延伸 5 大頂級單品 ｜ 點擊可閱讀獨立產品介紹與多圖 EDM 海報</p>
+            </div>
+
+            <!-- Sub Navigation Tabs for the 5 Products -->
+            <div class="bg-white border-b border-mique-lavender sticky top-20 z-30 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 flex items-center justify-start sm:justify-center space-x-2 sm:space-x-4 overflow-x-auto py-3 text-xs font-bold">
+                    <a href="#product-1" onclick="navigateTo('product-1')" class="px-4 py-2 rounded-full bg-mique-lavender text-mique-purple hover:bg-mique-purple hover:text-white transition whitespace-nowrap">1. 蜜境保濕前導水</a>
+                    <a href="#product-2" onclick="navigateTo('product-2')" class="px-4 py-2 rounded-full bg-mique-lavender text-mique-purple hover:bg-mique-purple hover:text-white transition whitespace-nowrap">2. 蜜萃光感亮膚精華</a>
+                    <a href="#product-3" onclick="navigateTo('product-3')" class="px-4 py-2 rounded-full bg-mique-lavender text-mique-purple hover:bg-mique-purple hover:text-white transition whitespace-nowrap">3. 蜜封修護鎖水乳霜</a>
+                    <a href="#product-4" onclick="navigateTo('product-4')" class="px-4 py-2 rounded-full bg-mique-lavender text-mique-purple hover:bg-mique-purple hover:text-white transition whitespace-nowrap">4. 蜜方淨瑕調理凝膠</a>
+                    <a href="#product-5" onclick="navigateTo('product-5')" class="px-4 py-2 rounded-full bg-mique-lavender text-mique-purple hover:bg-mique-purple hover:text-white transition whitespace-nowrap">5. 蜜護私密淨膚慕絲</a>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 py-16">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="secret-series-grid"></div>
+            </div>
+        </section>
+
+        <!-- 3C: INDIVIDUAL PRODUCT SUB-PAGES (#product-1 ~ #product-5) -->
+        <section id="page-product-1" class="page-view"><div class="max-w-5xl mx-auto px-4 py-12" id="product-page-container-1"></div></section>
+        <section id="page-product-2" class="page-view"><div class="max-w-5xl mx-auto px-4 py-12" id="product-page-container-2"></div></section>
+        <section id="page-product-3" class="page-view"><div class="max-w-5xl mx-auto px-4 py-12" id="product-page-container-3"></div></section>
+        <section id="page-product-4" class="page-view"><div class="max-w-5xl mx-auto px-4 py-12" id="product-page-container-4"></div></section>
+        <section id="page-product-5" class="page-view"><div class="max-w-5xl mx-auto px-4 py-12" id="product-page-container-5"></div></section>
+
+
+        <!-- ================= 4. CYCLE GUIDE ================= -->
+        <section id="page-cycle-guide" class="page-view">
+            <div class="bg-mique-lavender py-12 border-b border-mique-lavender text-center">
+                <span class="text-mique-gold-dark font-bold text-xs tracking-widest uppercase">Hormonal Skincare Map</span>
+                <h1 class="text-3xl font-bold font-serif-custom text-mique-purple mt-1">週期保養寶典</h1>
+                <p class="text-gray-600 text-sm mt-2">對應 28 天生理荷爾蒙週期，提供精準、科學與安全的 MIQUE 對照保養法</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-4 py-12">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="cycle-tabs">
+                    <button onclick="switchCyclePhase('follicular')" id="tab-follicular" class="cycle-tab-btn p-4 rounded-2xl bg-white border-2 border-mique-purple shadow-sm transition text-left">
+                        <div class="text-[10px] font-bold text-mique-gold-dark uppercase tracking-widest">Phase 01</div>
+                        <h4 class="font-bold text-mique-purple text-base mt-0.5">濾泡期 (D1-7)</h4>
+                        <span class="text-[11px] text-gray-500 block mt-1">黃金修護期 ｜ 代謝佳</span>
+                    </button>
+                    <button onclick="switchCyclePhase('ovulation')" id="tab-ovulation" class="cycle-tab-btn p-4 rounded-2xl bg-white border border-gray-200 transition text-left hover:border-mique-purple">
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phase 02</div>
+                        <h4 class="font-bold text-gray-700 text-base mt-0.5">排卵期 (D8-14)</h4>
+                        <span class="text-[11px] text-gray-500 block mt-1">巔峰平穩期 ｜ 透亮保濕</span>
+                    </button>
+                    <button onclick="switchCyclePhase('luteal')" id="tab-luteal" class="cycle-tab-btn p-4 rounded-2xl bg-white border border-gray-200 transition text-left hover:border-mique-purple">
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phase 03</div>
+                        <h4 class="font-bold text-gray-700 text-base mt-0.5">黃體期 (D15-21)</h4>
+                        <span class="text-[11px] text-gray-500 block mt-1">油脂分泌旺盛 ｜ 淨瑕調理</span>
+                    </button>
+                    <button onclick="switchCyclePhase('menstrual')" id="tab-menstrual" class="cycle-tab-btn p-4 rounded-2xl bg-white border border-gray-200 transition text-left hover:border-mique-purple">
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phase 04</div>
+                        <h4 class="font-bold text-gray-700 text-base mt-0.5">行經期 (D22-28)</h4>
+                        <span class="text-[11px] text-gray-500 block mt-1">敏弱乾燥期 ｜ 溫和安撫</span>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-mique-lavender p-6 sm:p-10 shadow-lg" id="cycle-detail-card"></div>
+            </div>
+        </section>
+
+        <!-- ================= 5. LUCKY WHEEL MINI-GAME PAGE (RESTRICTED TO ONE SPIN) ================= -->
+        <section id="page-game" class="page-view">
+            <div class="bg-gradient-to-b from-mique-purple via-mique-purple-dark to-mique-purple text-white py-12 border-b border-mique-purple-light text-center">
+                <span class="bg-mique-gold/20 text-mique-gold font-bold text-xs tracking-widest px-3 py-1 rounded-full uppercase">MIQUE Lucky Wheel</span>
+                <h1 class="text-3xl sm:text-4xl font-bold font-serif-custom mt-2">保養秘蜜幸運盤</h1>
+                <p class="text-gray-200 text-sm mt-2">轉動轉盤抽專屬折價券 <strong>(每位訪客限參加 1 次)</strong></p>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-4 py-12 flex flex-col items-center">
+                
+                <div id="game-lock-banner" class="hidden mb-6 w-full max-w-md bg-amber-50 border border-amber-200 p-4 rounded-2xl text-center space-y-1">
+                    <span class="text-amber-800 text-xs font-bold block"><i class="fa-solid fa-lock text-amber-600 mr-1"></i> 您已完成今日的幸運輪盤抽獎！</span>
+                    <p class="text-[11px] text-amber-700">獎項折扣碼已為您保留，可直接於購物車結帳時使用。</p>
+                </div>
+
+                <div class="relative w-80 h-80 sm:w-96 sm:h-96">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-20 w-8 h-10 text-mique-gold drop-shadow-md">
+                        <i class="fa-solid fa-location-pin text-4xl"></i>
+                    </div>
+
+                    <canvas id="wheel-canvas" width="380" height="380" class="w-full h-full rounded-full shadow-2xl border-4 border-mique-gold bg-white"></canvas>
+
+                    <button id="spin-btn" onclick="spinWheel()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-20 h-20 rounded-full bg-gradient-to-r from-mique-gold to-mique-gold-light text-mique-purple-dark font-bold text-sm shadow-xl hover:scale-105 transition flex items-center justify-center border-2 border-white disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span id="spin-btn-text">開始<br>轉動</span>
+                    </button>
+                </div>
+
+                <div id="game-result-box" class="mt-8 bg-white p-6 rounded-3xl border border-mique-lavender shadow-xl max-w-md w-full text-center hidden">
+                    <span class="text-3xl">🎉</span>
+                    <h3 class="text-xl font-bold text-mique-purple mt-1" id="prize-title">恭喜抽中獎項！</h3>
+                    <p class="text-xs text-gray-500 mt-1" id="prize-desc">獲得專屬折扣碼</p>
+                    <div class="my-4 p-3 bg-mique-lavender rounded-xl border border-dashed border-mique-gold flex items-center justify-between">
+                        <span class="font-mono font-bold text-mique-purple text-lg" id="prize-code">MIQUE2026</span>
+                        <button onclick="copyDiscountCode()" class="px-3 py-1.5 bg-mique-purple text-white text-xs rounded-lg hover:bg-mique-gold hover:text-mique-purple transition font-bold">複製優惠碼</button>
+                    </div>
+                    <button onclick="navigateTo('products-secret')" class="w-full py-2.5 bg-mique-purple text-white font-bold text-xs rounded-xl hover:bg-mique-gold hover:text-mique-purple transition">前往挑選秘蜜系列產品抵用</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 6. PAGE: SDGS ================= -->
+        <section id="page-sdgs" class="page-view">
+            <div class="bg-mique-purple text-white py-16 text-center">
+                <span class="text-mique-gold-light text-xs font-bold tracking-widest uppercase">Sustainability Goal</span>
+                <h1 class="text-3xl font-bold font-serif-custom mt-1">永續理念 SDGs 承諾</h1>
+                <p class="text-gray-200 text-sm mt-2">關懷肌膚與地球的永續發展承諾</p>
+            </div>
+            <div class="max-w-5xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold mb-3">SDG 3</div>
+                    <h3 class="font-bold text-mique-purple">良好健康與福祉</h3>
+                    <p class="text-xs text-gray-600 mt-2 leading-relaxed">全系列原料通過安全試驗，無刺激有害添加物，並獲得 ISO 22716 品質驗證。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center font-bold mb-3">SDG 5</div>
+                    <h3 class="font-bold text-mique-purple">性別平等與自我自主</h3>
+                    <p class="text-xs text-gray-600 mt-2 leading-relaxed">提倡生理期護膚自主權，拋開私密話題標籤，正視女性每個階段的身體需求。</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-mique-lavender shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center font-bold mb-3">SDG 12</div>
+                    <h3 class="font-bold text-mique-purple">責任消費與生產</h3>
+                    <p class="text-xs text-gray-600 mt-2 leading-relaxed">採用 100% 可回收瓶身包材，減少塑膠廢棄，貫徹環境友善包裝策略。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SHOPPING CART SLIDE-OVER DRAWER -->
+    <div id="cart-drawer-backdrop" onclick="toggleCartDrawer()" class="fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-mique-lavender flex justify-between items-center bg-mique-purple text-white">
+            <h3 class="font-serif-custom font-bold text-lg flex items-center gap-2">
+                <i class="fa-solid fa-bag-shopping text-mique-gold"></i> 購物車
+            </h3>
+            <button onclick="toggleCartDrawer()" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="flex-grow p-6 overflow-y-auto space-y-4" id="cart-items-list"></div>
+        <div class="p-6 border-t border-mique-lavender bg-mique-lavender/30 space-y-3">
+            <div class="flex justify-between font-bold text-lg text-mique-purple">
+                <span>總計金額</span>
+                <span class="text-mique-gold-dark" id="cart-total">$0</span>
+            </div>
+            <button onclick="checkoutCart()" class="w-full py-3.5 bg-mique-purple text-white font-bold rounded-xl hover:bg-mique-gold hover:text-mique-purple transition">結帳辦理</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-mique-purple text-white border-t border-mique-purple-light pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3">
+                <span class="font-serif-custom text-xl font-bold tracking-widest text-mique-gold">MIQUE 蜜刻</span>
+                <p class="text-xs text-gray-200 leading-relaxed">
+                    專屬自己的「秘蜜」時刻。<br>融合嚴選蜂蜜配方與質感美學。
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs text-mique-gold mb-3 uppercase">產品與導覽選單</h4>
+                <ul class="space-y-1 text-xs text-gray-200">
+                    <li><a href="#brand-intro" onclick="navigateTo('brand-intro')">品牌故事</a></li>
+                    <li><a href="#products-secret" onclick="navigateTo('products-secret')">秘蜜保養系列</a></li>
+                    <li><a href="#cycle-guide" onclick="navigateTo('cycle-guide')">週期保養寶典</a></li>
+                    <li><a href="#game" onclick="navigateTo('game')">保養秘蜜幸運盤</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs text-mique-gold mb-3 uppercase">品質安心認證</h4>
+                <ul class="space-y-1 text-xs text-gray-200">
+                    <li>ISO 22716 國際認證規範</li>
+                    <li>完成 PIF 產品資訊檔案登錄</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs text-mique-gold mb-3 uppercase">官方聯繫 EMAIL</h4>
+                <p class="text-xs text-gray-200 font-mono font-bold bg-white/10 p-2.5 rounded-xl border border-white/20">
+                    <i class="fa-regular fa-envelope text-mique-gold mr-1.5"></i> mique20261207@gmail.com
+                </p>
+            </div>
+        </div>
+        <div class="text-center text-xs text-gray-300 border-t border-white/10 pt-4">
+            &copy; 2026 MIQUE 蜜刻. All Rights Reserved. Contact: mique20261207@gmail.com
+        </div>
+    </footer>
+
+    <script>
+        // Official Products Master Data
+        const productsData = [
+            {
+                id: 1,
+                name: "蜜境保濕前導水",
+                category: "facial",
+                price: 299,
+                volume: "150mL",
+                tag: "前導水",
+                ingredients: ["醣基海藻醣", "雙丙二醇", "維生素B5"],
+                desc: "作為保養第一步，瞬間浸潤角質層，打通肌膚吸收通道，專為生理期乾燥肌膚打底。",
+                usageSteps: "洗臉後取適量於掌心或棉片，由內而外輕壓拍撫至吸收。",
+                edmImages: [],
+                svgType: "water"
+            },
+            {
+                id: 2,
+                name: "蜜萃光感亮膚精華",
+                category: "facial",
+                price: 899,
+                volume: "30mL",
+                tag: "亮膚精華",
+                ingredients: ["菸鹼醯胺 (B3)", "ILLUMNYL 388", "有機蜂蜜萃取"],
+                desc: "集中亮白修護，改善肌膚暗沉，賦予肌膚透亮光澤感，擊退濾泡期暗沉困擾。",
+                usageSteps: "於前導水後使用，按壓1-2滴均勻塗抹於全臉，可局部加強暗沉區域。",
+                edmImages: [],
+                svgType: "serum"
+            },
+            {
+                id: 3,
+                name: "蜜封修護鎖水乳霜",
+                category: "facial",
+                price: 1099,
+                volume: "100mL",
+                tag: "鎖水乳霜",
+                ingredients: ["蜂萃取", "紅果安肌素", "荷荷巴油"],
+                desc: "奢華豐潤質地，於肌膚表面形成輕盈保護膜，長效深層鎖水，強化屏障力量。",
+                usageSteps: "精華液後取豆大份量，於雙掌微溫揉開後順著肌膚紋理輕揉按壓。",
+                edmImages: [],
+                svgType: "cream"
+            },
+            {
+                id: 4,
+                name: "蜜方淨瑕調理凝膠",
+                category: "facial",
+                price: 399,
+                volume: "15g",
+                tag: "淨瑕調理",
+                ingredients: ["有機蜂蜜萃取", "庫拉索蘆薈", "水楊酸"],
+                desc: "溫和淨化油脂與黃體期突發生理痘瑕疵，舒緩肌膚局部不適感。",
+                usageSteps: "早晚清潔後，取微量點塗於易出油粉刺或泛紅生理痘區域。",
+                edmImages: [],
+                svgType: "gel"
+            },
+            {
+                id: 5,
+                name: "蜜護私密淨膚慕絲",
+                category: "intimate",
+                price: 399,
+                volume: "150mL",
+                tag: "私密慕絲",
+                ingredients: ["弱酸 pH 4.5 配方", "有機蜂蜜萃取", "乳酸菌發酵物"],
+                desc: "綿密細緻泡泡，溫和潔淨私密嬌嫩肌膚，維持健康微生態屏障，給予行經期安心呵護。",
+                usageSteps: "按壓1-2次產生綿密泡沫，輕柔清潔私密肌膚後以溫水沖淨即可。",
+                edmImages: [],
+                svgType: "mousse"
+            }
+        ];
+
+        // Skincare Cycle Data
+        const cycleGuideData = {
+            follicular: {
+                title: "01. 濾泡期 (第 1 - 7 天)",
+                subtitle: "黃金修護期 ｜ 代謝佳 ｜ 完美煥膚",
+                hormoneStatus: "雌激素水準逐步上升，新陳代謝旺盛，肌膚吸收力達到最佳狀態。",
+                skinAnalysis: "角質更新速度加快，水油平衡度佳，是補充高活性滋養精華的最佳黃金時機。",
+                strategy: "【高效修護 + 極致亮采】強化美白與抗氧化，深度注入活性成分。",
+                recommendedProducts: [2, 1, 3]
+            },
+            ovulation: {
+                title: "02. 排卵期 (第 8 - 14 天)",
+                subtitle: "巔峰平穩期 ｜ 透亮保濕 ｜ 鎖水防護",
+                hormoneStatus: "雌激素達到峰值後微幅下降，黃體素開始分泌，肌膚水份易流失。",
+                skinAnalysis: "肌膚狀態雖然亮麗，但防禦屏障變薄，若曝曬或乾燥容易產生暗沉。",
+                strategy: "【強效鎖水 + 屏障防護】注重角質層抓水與鎖水，維持油水穩定狀態。",
+                recommendedProducts: [1, 3, 5]
+            },
+            luteal: {
+                title: "03. 黃體期 (第 15 - 21 天)",
+                subtitle: "油脂旺盛期 ｜ 淨瑕調理 ｜ 清爽抑油",
+                hormoneStatus: "黃體素大幅上升，皮脂腺分泌異常活躍，毛孔易阻塞。",
+                skinAnalysis: "出油量明顯增加，易產生生理痘、粉刺或毛孔粗大問題。",
+                strategy: "【溫和淨瑕 + 控油舒緩】著重局部痘痘淨化與清爽無負擔補水。",
+                recommendedProducts: [4, 1, 5]
+            },
+            menstrual: {
+                title: "04. 行經期 (第 22 - 28 天)",
+                subtitle: "敏弱乾燥期 ｜ 溫和安撫 ｜ 私密潔淨",
+                hormoneStatus: "雌激素與黃體素皆降至最低點，體溫略降，免疫力與防禦力較弱。",
+                skinAnalysis: "肌膚容易乾燥、粗糙、泛紅敏弱；私密處悶熱感增加。",
+                strategy: "【極致溫和安撫 + 私密弱酸防護】拒絕刺激成分，注重私密與全面滋潤。",
+                recommendedProducts: [5, 1, 3]
+            }
+        };
+
+        let cart = [];
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            
+            // Check if pageId is an individual product view (#product-1 ~ #product-5)
+            if (pageId.startsWith('product-') && !pageId.includes('overview') && !pageId.includes('secret')) {
+                const prodNum = parseInt(pageId.split('-')[1]);
+                renderIndividualProductPage(prodNum);
+            }
+
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.location.hash = pageId;
+                if (pageId === 'game') drawWheel();
+            } else {
+                document.getElementById('page-home').classList.add('active');
+            }
+        }
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) navigateTo(hash);
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            renderHomeProductsPreview();
+            renderOverviewGrid();
+            renderSecretSeriesGrid();
+            renderAllProductPages();
+            switchCyclePhase('follicular');
+            checkSpinStatusOnLoad();
+            navigateTo(hash);
+        });
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function generateProductSVG(type) {
+            return `
+            <svg viewBox="0 0 100 140" class="w-24 h-32 mx-auto filter drop-shadow">
+                <rect x="30" y="30" width="40" height="90" rx="8" fill="#F4EFF8"/>
+                <rect x="38" y="10" width="24" height="20" rx="2" fill="#D4AF37"/>
+                <text x="50" y="70" font-size="7" font-weight="bold" fill="#735E8A" text-anchor="middle">MIQUE</text>
+            </svg>`;
+        }
+
+        function renderHomeProductsPreview() {
+            const container = document.getElementById('home-products-preview');
+            container.innerHTML = productsData.slice(0, 3).map(p => createProductCardHTML(p)).join('');
+        }
+
+        function renderOverviewGrid() {
+            const container = document.getElementById('products-overview-grid');
+            if (container) {
+                container.innerHTML = productsData.map(p => createProductCardHTML(p)).join('');
+            }
+        }
+
+        function renderSecretSeriesGrid() {
+            const container = document.getElementById('secret-series-grid');
+            if (container) {
+                container.innerHTML = productsData.map(p => createProductCardHTML(p)).join('');
+            }
+        }
+
+        function createProductCardHTML(p) {
+            const edmCount = p.edmImages ? p.edmImages.length : 0;
+            return `
+            <div class="bg-white rounded-3xl p-6 border border-mique-lavender shadow-sm flex flex-col justify-between group hover:shadow-md transition">
+                <div>
+                    <div class="bg-mique-lavender/40 rounded-2xl p-4 text-center mb-4 group-hover:scale-105 transition-transform">
+                        ${generateProductSVG(p.svgType)}
+                    </div>
+                    <span class="text-xs font-bold text-mique-gold-dark bg-mique-lavender px-2.5 py-0.5 rounded-full">${p.tag}</span>
+                    <h3 class="font-serif-custom font-bold text-lg text-mique-purple mt-2 cursor-pointer hover:text-mique-gold" onclick="navigateTo('product-${p.id}')">${p.name}</h3>
+                    <p class="text-xs text-gray-500 mt-1 line-clamp-2">${p.desc}</p>
+                </div>
+                <div class="mt-6 pt-3 border-t border-gray-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-lg font-bold text-mique-purple font-serif-custom">$${p.price}</span>
+                        <span class="text-[10px] text-gray-400 block">${p.volume}</span>
+                    </div>
+                    <button onclick="navigateTo('product-${p.id}')" class="px-3.5 py-1.5 rounded-full bg-mique-purple text-white text-xs font-bold hover:bg-mique-gold hover:text-mique-purple transition">
+                        詳情與多圖 EDM (${edmCount})
+                    </button>
+                </div>
+            </div>`;
+        }
+
+        function renderAllProductPages() {
+            productsData.forEach(p => {
+                renderIndividualProductPage(p.id);
+            });
+        }
+
+        function renderIndividualProductPage(productId) {
+            const p = productsData.find(item => item.id === productId);
+            if (!p) return;
+
+            const container = document.getElementById(`product-page-container-${productId}`);
+            if (!container) return;
+
+            const edmCount = p.edmImages.length;
+
+            container.innerHTML = `
+            <div class="bg-white rounded-3xl border border-mique-lavender p-6 sm:p-10 shadow-lg space-y-8">
+                <!-- Top Breadcrumb Navigation -->
+                <div class="flex items-center gap-2 text-xs text-gray-500 border-b pb-4">
+                    <a href="#products-overview" onclick="navigateTo('products-overview')" class="hover:text-mique-purple">全系列產品總覽</a>
+                    <span>/</span>
+                    <a href="#products-secret" onclick="navigateTo('products-secret')" class="hover:text-mique-purple">秘蜜保養系列</a>
+                    <span>/</span>
+                    <span class="text-mique-purple font-bold">${p.name}</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-mique-lavender/40 rounded-3xl p-8 text-center border border-mique-lavender">
+                        ${generateProductSVG(p.svgType)}
+                        <span class="inline-block mt-4 text-xs font-bold text-mique-gold-dark bg-white px-3 py-1 rounded-full shadow-sm">${p.tag} ｜ ${p.volume}</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h1 class="text-3xl font-bold font-serif-custom text-mique-purple">${p.name}</h1>
+                        <p class="text-sm text-gray-600 leading-relaxed">${p.desc}</p>
+
+                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-2">
+                            <span class="text-xs font-bold text-mique-purple block"><i class="fa-solid fa-leaf text-mique-gold mr-1"></i> 核心亮點成分：</span>
+                            <div class="flex flex-wrap gap-2">
+                                ${p.ingredients.map(ing => `<span class="bg-white text-gray-700 text-[11px] px-2.5 py-1 rounded-lg border">${ing}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-1">
+                            <span class="text-xs font-bold text-mique-purple block"><i class="fa-solid fa-hand-holding-droplet text-mique-gold mr-1"></i> 建議使用步驟：</span>
+                            <p class="text-xs text-gray-600">${p.usageSteps}</p>
+                        </div>
+
+                        <div class="pt-4 flex items-center justify-between">
+                            <div>
+                                <span class="text-3xl font-bold text-mique-purple font-serif-custom">$${p.price}</span>
+                                <span class="text-xs text-gray-400 block">${p.volume} 尊榮瓶裝</span>
+                            </div>
+                            <button onclick="addToCart(${p.id})" class="px-8 py-3.5 rounded-full bg-mique-purple text-white font-bold text-xs hover:bg-mique-gold hover:text-mique-purple transition shadow-md">
+                                <i class="fa-solid fa-bag-shopping mr-2"></i> 加入購物車
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MULTI-IMAGE EDM GALLERY SECTION FOR THIS PRODUCT -->
+                <div class="pt-8 border-t border-mique-lavender">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-mique-purple font-serif-custom"><i class="fa-solid fa-images text-mique-gold mr-2"></i>【${p.name}】多圖 EDM 宣傳海報藝廊</h3>
+                            <p class="text-xs text-gray-500 mt-0.5">可一次選擇並批次上傳多張 EDM 圖片展示長版海報</p>
+                        </div>
+                        <label class="cursor-pointer bg-mique-lavender text-mique-purple px-4 py-2 rounded-full text-xs font-bold hover:bg-mique-purple hover:text-white transition">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> 批次新增 EDM 圖片
+                            <input type="file" multiple accept="image/*" class="hidden" onchange="handleMultipleEDMUpload(event, ${p.id})">
+                        </label>
+                    </div>
+
+                    <div id="product-edm-gallery-${p.id}">
+                        ${renderMultiEDMHTML(p)}
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function renderMultiEDMHTML(product) {
+            if (product.edmImages && product.edmImages.length > 0) {
+                return `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-b pb-2">
+                        <span>已載入 <strong>${product.edmImages.length}</strong> 張 EDM 圖檔</span>
+                    </div>
+                    <div class="space-y-4 p-2 bg-gray-50 rounded-2xl border">
+                        ${product.edmImages.map((imgSrc, idx) => `
+                        <div class="relative group rounded-xl overflow-hidden border shadow-sm">
+                            <span class="absolute top-2 left-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full z-10">EDM Slide #${idx + 1}</span>
+                            <button onclick="removeSingleEDM(${product.id}, ${idx})" class="absolute top-2 right-2 bg-red-500 text-white w-6 h-6 rounded-full text-xs opacity-0 group-hover:opacity-100 transition z-10">×</button>
+                            <img src="${imgSrc}" class="w-full h-auto object-cover">
+                        </div>`).join('')}
+                    </div>
+                </div>`;
+            } else {
+                return `
+                <div class="edm-dashed-box p-8 rounded-3xl text-center space-y-4">
+                    <i class="fa-solid fa-images text-3xl text-mique-gold"></i>
+                    <div>
+                        <h4 class="font-bold text-base text-mique-purple">此產品目前尚無批次上傳之 EDM 宣傳圖片</h4>
+                        <p class="text-xs text-gray-500 mt-1">您可以點擊下方按鈕，上傳一份或多份圖片檔以呈現長頁面視覺設計</p>
+                    </div>
+                    <label class="inline-flex items-center gap-2 cursor-pointer bg-mique-purple text-white px-6 py-2.5 rounded-full text-xs font-bold shadow hover:bg-mique-gold hover:text-mique-purple transition">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>選擇多張 EDM 宣傳圖片</span>
+                        <input type="file" multiple accept="image/*" class="hidden" onchange="handleMultipleEDMUpload(event, ${product.id})">
+                    </label>
+                </div>`;
+            }
+        }
+
+        function handleMultipleEDMUpload(event, productId) {
+            const files = Array.from(event.target.files);
+            if (!files || files.length === 0) return;
+
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            let loadedCount = 0;
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    product.edmImages.push(e.target.result);
+                    loadedCount++;
+                    if (loadedCount === files.length) {
+                        renderIndividualProductPage(productId);
+                        renderOverviewGrid();
+                        renderSecretSeriesGrid();
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function removeSingleEDM(productId, index) {
+            const product = productsData.find(p => p.id === productId);
+            if (product && product.edmImages) {
+                product.edmImages.splice(index, 1);
+                renderIndividualProductPage(productId);
+                renderOverviewGrid();
+                renderSecretSeriesGrid();
+            }
+        }
+
+        function switchCyclePhase(phaseKey) {
+            const phase = cycleGuideData[phaseKey];
+            if (!phase) return;
+
+            document.querySelectorAll('.cycle-tab-btn').forEach(btn => {
+                btn.classList.remove('border-2', 'border-mique-purple', 'shadow-sm');
+                btn.classList.add('border', 'border-gray-200');
+            });
+            const activeTab = document.getElementById(`tab-${phaseKey}`);
+            if (activeTab) {
+                activeTab.classList.remove('border-gray-200');
+                activeTab.classList.add('border-2', 'border-mique-purple', 'shadow-sm');
+            }
+
+            const cardContainer = document.getElementById('cycle-detail-card');
+            const recProductsHTML = phase.recommendedProducts.map(pId => {
+                const prod = productsData.find(p => p.id === pId);
+                return `
+                <div class="bg-mique-lavender/40 p-4 rounded-2xl border border-mique-lavender flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-bold text-mique-purple text-xs border">
+                            ${prod.tag[0]}
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-xs text-mique-purple cursor-pointer hover:underline" onclick="navigateTo('product-${prod.id}')">${prod.name}</h5>
+                            <span class="text-[10px] text-gray-500">$${prod.price} ｜ ${prod.volume}</span>
+                        </div>
+                    </div>
+                    <button onclick="addToCart(${prod.id})" class="px-3 py-1 rounded-full bg-mique-purple text-white text-[11px] font-bold hover:bg-mique-gold hover:text-mique-purple transition">加購物車</button>
+                </div>`;
+            }).join('');
+
+            cardContainer.innerHTML = `
+            <div class="space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-mique-gold-dark bg-mique-lavender px-3 py-1 rounded-full uppercase tracking-wider">Hormonal Phase Guide</span>
+                    <h3 class="text-2xl font-bold font-serif-custom text-mique-purple mt-2">${phase.title}</h3>
+                    <p class="text-xs text-mique-gold-dark font-bold mt-1">${phase.subtitle}</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-2">
+                    <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="text-[11px] font-bold text-mique-purple block mb-1"><i class="fa-solid fa-wave-square text-mique-gold mr-1"></i> 荷爾蒙狀態</span>
+                        <p class="text-xs text-gray-600 leading-relaxed">${phase.hormoneStatus}</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="text-[11px] font-bold text-mique-purple block mb-1"><i class="fa-solid fa-microscope text-mique-gold mr-1"></i> 肌膚特徵診斷</span>
+                        <p class="text-xs text-gray-600 leading-relaxed">${phase.skinAnalysis}</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="text-[11px] font-bold text-mique-purple block mb-1"><i class="fa-solid fa-bullseye text-mique-gold mr-1"></i> 對照保養策略</span>
+                        <p class="text-xs text-gray-600 leading-relaxed">${phase.strategy}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-mique-purple mb-3"><i class="fa-solid fa-star text-mique-gold mr-1.5"></i> 建議對照搭配 MIQUE 秘蜜保養單品：</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        ${recProductsHTML}
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // LUCKY WHEEL LOGIC (RESTRICTED TO ONE SPIN)
+        const prizes = [
+            { name: "專屬折價券 $100", code: "MIQUE100" },
+            { name: "秘蜜全系列折扣 $200", code: "MIQUE200" },
+            { name: "蜜境前導水 試用包", code: "FREE-WATER" },
+            { name: "保養尊榮禮遇 VIP", code: "MIQUEVIP" },
+            { name: "蜜萃精華 85折", code: "SERUM85" },
+            { name: "幸運蜜刻 88折", code: "MIQUE2026" }
+        ];
+
+        let hasSpunWheel = false;
+
+        function checkSpinStatusOnLoad() {
+            const savedPrize = localStorage.getItem('mique_wheel_prize');
+            if (savedPrize) {
+                hasSpunWheel = true;
+                const prizeObj = JSON.parse(savedPrize);
+                lockWheelUI(prizeObj);
+            }
+        }
+
+        function drawWheel() {
+            const canvas = document.getElementById('wheel-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const numPrizes = prizes.length;
+            const arc = (2 * Math.PI) / numPrizes;
+
+            ctx.clearRect(0, 0, 380, 380);
+
+            prizes.forEach((prize, i) => {
+                const angle = i * arc;
+                ctx.beginPath();
+                ctx.fillStyle = i % 2 === 0 ? '#F4EFF8' : '#735E8A';
+                ctx.moveTo(190, 190);
+                ctx.arc(190, 190, 180, angle, angle + arc);
+                ctx.lineTo(190, 190);
+                ctx.fill();
+
+                ctx.save();
+                ctx.fillStyle = i % 2 === 0 ? '#735E8A' : '#D4AF37';
+                ctx.translate(190 + Math.cos(angle + arc / 2) * 120, 190 + Math.sin(angle + arc / 2) * 120);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                ctx.font = 'bold 12px Noto Sans TC';
+                ctx.fillText(prize.name, -ctx.measureText(prize.name).width / 2, 0);
+                ctx.restore();
+            });
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (hasSpunWheel) {
+                alert('您已參加過抽獎囉！每位訪客限轉動 1 次。');
+                return;
+            }
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const wheelCanvas = document.getElementById('wheel-canvas');
+            const randomDegree = Math.floor(1800 + Math.random() * 360);
+            wheelCanvas.style.transform = `rotate(${randomDegree}deg)`;
+
+            setTimeout(() => {
+                isSpinning = false;
+                hasSpunWheel = true;
+
+                const winningIndex = Math.floor(Math.random() * prizes.length);
+                const prize = prizes[winningIndex];
+
+                localStorage.setItem('mique_wheel_prize', JSON.stringify(prize));
+                lockWheelUI(prize);
+            }, 4000);
+        }
+
+        function lockWheelUI(prize) {
+            const spinBtn = document.getElementById('spin-btn');
+            const spinText = document.getElementById('spin-btn-text');
+            const lockBanner = document.getElementById('game-lock-banner');
+            const badge = document.getElementById('game-status-badge');
+
+            if (spinBtn) {
+                spinBtn.disabled = true;
+                spinText.innerHTML = "已完成<br>抽獎";
+            }
+            if (lockBanner) lockBanner.classList.remove('hidden');
+            if (badge) {
+                badge.textContent = "已完成";
+                badge.classList.remove('bg-mique-gold');
+                badge.classList.add('bg-gray-300', 'text-gray-600');
+            }
+
+            document.getElementById('prize-title').textContent = `🎉 恭喜抽中【${prize.name}】!`;
+            document.getElementById('prize-code').textContent = prize.code;
+            document.getElementById('game-result-box').classList.remove('hidden');
+        }
+
+        function copyDiscountCode() {
+            const code = document.getElementById('prize-code').textContent;
+            navigator.clipboard ? navigator.clipboard.writeText(code) : document.execCommand('copy');
+            alert(`已複製優惠碼：${code}`);
+        }
+
+        // CART DRAWER LOGIC
+        function toggleCartDrawer() {
+            document.getElementById('cart-drawer-backdrop').classList.toggle('opacity-0');
+            document.getElementById('cart-drawer-backdrop').classList.toggle('pointer-events-none');
+            document.getElementById('cart-drawer').classList.toggle('translate-x-full');
+        }
+
+        function addToCart(productId) {
+            const existing = cart.find(i => i.id === productId);
+            if (existing) existing.qty += 1;
+            else {
+                const p = productsData.find(item => item.id === productId);
+                if (p) cart.push({ ...p, qty: 1 });
+            }
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count-badge').textContent = cart.reduce((s, i) => s + i.qty, 0);
+            const list = document.getElementById('cart-items-list');
+            if (cart.length === 0) {
+                list.innerHTML = `<p class="text-center text-xs text-gray-400 py-10">購物車目前是空的</p>`;
+                document.getElementById('cart-total').textContent = '$0';
+                return;
+            }
+            list.innerHTML = cart.map(i => `
+            <div class="flex items-center justify-between p-3 border rounded-xl">
+                <div>
+                    <h4 class="font-bold text-xs text-mique-purple">${i.name}</h4>
+                    <span class="text-[10px] text-gray-500">$${i.price} x ${i.qty}</span>
+                </div>
+                <span class="font-bold text-xs text-mique-purple">$${i.price * i.qty}</span>
+            </div>`).join('');
+            const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            document.getElementById('cart-total').textContent = `$${total}`;
+        }
+
+        function checkoutCart() {
+            alert('感謝預訂！MIQUE 客服 (mique20261207@gmail.com) 將竭誠為您服務。');
+            cart = [];
+            updateCartUI();
+            toggleCartDrawer();
+        }
+    </script>
+</body>
+</html>
